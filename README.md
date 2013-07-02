@@ -20,9 +20,9 @@ and links.
 
 ### More Detailed Info
 
-* To change from data/data.csv to data/geojson.geojson or another file, add a tag just above the <script> tag for row-to-scope.js
+* To change from data/data.csv to data/geojson.geojson or another file, add a tag just above the &lt;script&gt; tag for row-to-scope.js
 
-    <script type="text/javascript">var dataSource = "data/geojson.geojson";</script>
+    &lt;script type="text/javascript"&gt;var dataSource = "data/geojson.geojson";&lt;/script&gt;
 
 * In JavaScript, replaceRow( "NAME" ) will convert a value in the first row to a value from the requested row
 
@@ -36,7 +36,7 @@ and links.
 
 * Fill the first row with column names like {{NAME}}, {{DESCRIPTION}}, {{HEIGHT}} so that it's easier to write your template page. /row?page=1 will be template, but the rest will have your data.
 
-* Put <script> and <style> tags in the <head> of the page.
+* Put &lt;script&gt; and &lt;style&gt; tags in the &lt;head&gt; of the page.
 
 ## Supported Formats
 
