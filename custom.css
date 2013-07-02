@@ -1,0 +1,57 @@
+body{
+  background-color:#000022;
+}
+body > .container{
+  background-color:#fff;
+}
+.hero-unit{
+  background:darkblue;
+  background:-webkit-gradient(linear, left top, left bottom, from(darkblue), color-stop(0.75, #c0c0f0), color-stop(0.85, #c0c0f0), to(darkblue));
+  background: -moz-linear-gradient(top, darkblue 0%, #c0c0f0 75%, #c0c0f0 85%, darkblue);
+  color:#fff;
+  text-shadow:#444 2px 4px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius:0px;
+}
+.navbar{
+  margin-top:-30px;
+  font-size:16pt;
+}
+.navbar-inner{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.nav li{
+  margin-right:25px;
+}
+.photorow{
+  margin-left:0;
+  margin-right:20px;
+  padding-bottom:20px;
+}
+.underlined{
+  border-bottom: 3px solid #444;
+}
+.span3{
+  padding:20px;
+}
+.photofeature{
+  -moz-border-radius:15px;
+  -webkit-border-radius:15px;
+  border-radius:15px;
+  -moz-box-shadow: #222 5px 6px;
+  -webkit-box-shadow: #222 5px 6px;
+  box-shadow: #222 5px 6px;
+}
+.sharper{
+  border: 1px solid #444;
+}
+iframe{
+  border: none;
+  overflow: none;
+}
+.nav > li > a:hover{
+  background-color: #fff;
+}

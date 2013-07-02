@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Row-to-Scope</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive-diff.min.css"/>
+    <link rel="stylesheet" type="text/css" href="custom.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <div class="hero-unit">
+            <h1>Row-to-Scope</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12 navbar">
+          <div class="navbar-inner container">
+            <ul class="nav navbar">
+              <li>
+                <a href="row?page=1">Sample Row</a>
+              </li>
+              <li>
+                <a href="demos/map/row?page=4">Sample Map</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row photorow underlined">
+        <div class="span7">
+          <h2>One to Many</h2>
+          <p>Turn a spreadsheet and the HTML page for the first row into a complete website.</p>
+        </div>
+        <div class="span3">
+          <img src="http://farm1.staticflickr.com/104/310928267_da5cb8ee68.jpg"/>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div class="row photorow underlined">
+        <div class="span7">
+          <h2>No DB</h2>
+          <p>Avoid database, server, and cross-domain API weirdness. Currently supports: CSV. Later: GeoJSON, KML, and other formats</p>
+        </div>
+        <div class="span3">
+          <img src="http://farm2.staticflickr.com/1389/1386344718_ec1d134b9d_n.jpg"/>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div class="row photorow underlined">
+        <div class="span7">
+          <h2>Whatever you want to make</h2>
+          <p>Write row/index.html, and any JavaScript maps, charts, and visualizations work for the other rows.</p>
+          <p>For Example:
+            <br/>
+            <h4>Data</h4>
+<code>Hello World,40,-80<br/>
+Hello Row 2,45,-100<br/>
+Hello Row-to-Scoped,30.429,30.4<br/>
+            </code>
+            <br/>
+            <h4>Code</h4>
+<code>var center = replaceRow([ 40, -80 ]);<br/>
+      var map = L.map("map").setView( center, 6 );<br/>
+      <br/>
+      var message = replaceRow("Hello World");<br/>
+      L.marker( center ).addTo(map);<br/>
+            </code>
+            <br/>
+            <ul>
+              <li><a href="demos/map/row/?page=1">/row?page=1</a> is the same page</li>
+              <li><a href="demos/map/row/?page=2">/row?page=2</a> maps the second marker</li>
+              <li><a href="demos/map/row/?page=3">/row?page=3</a> maps the third marker</li>
+            </ul>
+          </p>
+        </div>
+        <div class="span3">
+          <img src="http://farm3.staticflickr.com/2092/2141860216_b0a57afef2_n.jpg"/>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <br/>
+      Images CC-BY-SA 24thcentury, robpatrick, Andy Field
+    </div>
+  </body>
+</html>
