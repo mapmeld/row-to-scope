@@ -5,18 +5,18 @@
 If you can write HTML, you can put all of your data records online! Row-to-Scope paints
 over the page for every row in your data.
 
-* /row?page=1 is the page with the first row's data
-* /row?page=2 is the page with the second row's data
+* /row?page=1 is a page with the first row's data
+* /row?page=2 is a page with the second row's data
+* /row?page=3 is a page with the third row's data
 * ...
 
 ### Key Components
 
-* The row/index.html page is how the page should look for the first row in your data.
+* The row/index.html page is how the page looks for the first row in your data.
 
-* data/data.csv is a spreadsheet of your data.
+* data/data.csv is a spreadsheet of your data. Use CSV or GeoJSON data.
 
-* The index.html page is a static homepage for your app. Use it for important information
-and links.
+* The index.html page is a homepage for your app. Use it for important information and links.
 
 ### More Detailed Info
 
