@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All about Penguins</title>
+    <style type="text/css">
+html, body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+}
+#viewer{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+    </style>
+
+    <script type="text/javascript" src="../javascript/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="../../../javascript/jquery.csv-0.71.min.js"></script>
+    <script type="text/javascript" src="../javascript/three.js"></script>
+    <script type="text/javascript" src="../javascript/Stats.js"></script>
+    <script type="text/javascript" src="../javascript/TrackballControls.js"></script>
+    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
+    <script type="text/javascript">
+function init(){
+var num = 0;
+
+var center = new THREE.Vector3();
+center.z = - 1000;
+var camera, controls;
+var scene = new THREE.Scene();
+
+camera = new THREE.PerspectiveCamera( 70, ($("#viewer").width() + 100) / $("#viewer").height(), 1, 10000 );
+scene.add(camera);
+camera.position.z = -1000;
+controls = new THREE.TrackballControls( camera, $("#viewer")[0] );
+controls.rotateSpeed = 1.0;
+controls.zoomSpeed = 1.2;
+controls.panSpeed = 0.8;
+controls.noZoom = false;
+controls.noPan = false;
+controls.staticMoving = true;
+controls.dynamicDampingFactor = 0.3;
+var renderer = new THREE.WebGLRenderer( { antialias: true, clearColor: 0x000000 } );
+renderer.setSize( $("#viewer").width(), $("#viewer").height() );
+$("#viewer").append(renderer.domElement);
+
+//load txt file and parse it
+var d;
+var colors = [];
+var dStart = 10; // d[0]~d[9] : headers and description infront of actural data sets.
+
+function read(fileName){
+	$.get(fileName, function(data) {
+	                d = $.csv.toArrays(data);
+	                
+	                
+	                //console.log(d[i][j].split(' ')); // if j == 0 : x, 1: y, 2 : z, 3 : red, 4 : green, 5 : blue
+	                makeColor();
+	                makeParticle();
+	                mouse = new THREE.Vector3( 0, 0, 1 );
+		document.addEventListener( 'mousemove', onMouseMove, false );
+	                animate();
+	 });
+}
+function makeColor(){
+	for(var i=0; i<d.length-dStart; i++){
+		colors[i] = new THREE.Color();
+		var cc = d[i+dStart][0].split(' ');
+		if(cc.length < 3){
+		  cc = d[i+dStart];
+		}
+		var r = cc[3]/255, g = cc[4]/255, b = cc[5]/255;
+		colors[i].setRGB(r, g, b);
+	}
+}
+function makeParticle(){
+    //make particles
+	var particleCount = d.length-dStart;
+	var particles = new THREE.Geometry();
+	var pMaterial = new THREE.ParticleBasicMaterial({blending: THREE.NormalBlending, size: 10, transparent: false, vertexColors: true, opacity: 0.7});
+
+    var offset = [ 0, 0, 0 ];
+
+	for(var p=0; p<particleCount; p++){
+		var v = d[p+dStart][0].split(' ');
+		if(v.length < 3){
+		  v = d[p+dStart];
+		}
+		if( (!isNaN(v[0] * 1)) && (!isNaN(v[1] * 1)) && (!isNaN(v[2] * 1)) ){
+		  offset[0] += v[0] * 1 / particleCount;
+		  offset[1] += v[1] * 1 / particleCount;
+		  offset[2] += v[2] * 1 / particleCount;
+		}
+	}
+
+	for(var p=0; p<particleCount; p++){
+		var v = d[p+dStart][0].split(' ');
+		if(v.length < 3){
+		  v = d[p+dStart];
+		}
+		particle = new THREE.Vector3(v[0] - offset[0], v[1] - offset[1], v[2] - offset[2]);
+		particles.vertices.push(particle);
+	}
+	particles.colors = colors;
+	var particleSystem = new THREE.ParticleSystem(particles, pMaterial);
+	scene.add(particleSystem);
+}
+function onMouseMove(e) {
+	mouse.x = e.clientX;
+	mouse.y = e.clientY;
+}
+function animate() {
+	requestAnimationFrame( animate );
+	render();
+}
+//camera function
+function render() {
+	controls.update();
+	renderer.render( scene, camera );
+}
+
+  read( "../data/" + replaceRow("shirt") + ".txt" );
+}
+    </script>
+  </head>
+  <body>
+    <div id="viewer">
+    </div>
+  </body>
+</html>
