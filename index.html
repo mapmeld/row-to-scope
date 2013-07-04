@@ -94,7 +94,7 @@ Hello Row-to-Scoped,30.429,30.4<br/>
       var map = L.map("map").setView( center, 6 );<br/>
       <br/>
       var message = replaceRow("Hello World");<br/>
-      L.marker( center ).addTo(map);<br/>
+      L.marker( center ).bindPopup( message ).addTo(map);<br/>
             </code>
             <br/>
             <ul>
