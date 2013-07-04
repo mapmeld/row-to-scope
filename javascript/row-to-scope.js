@@ -9,7 +9,19 @@ if(dataSource.toLowerCase().indexOf(".csv") > -1){
     runRows(rows);
   });
 }
+else if(dataSource.toLowerCase().indexOf(".shp") > -1){
+  // ZIP / SHP parser
+  shp( dataSource ).then(function(data){
+    var myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
+    getGeometry = function(){
+      var feature = data.features[ myindex ];
+      return feature;
+    };
+    runRows(data.features);
+  });
+}
 else{
+  // GeoJSON parser
   $.getJSON(dataSource, function(data){
     var myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
     getGeometry = function(){
@@ -21,6 +33,7 @@ else{
 
 function runRows(rows){
   // get key and current page
+  
   var keyrow = rows[ 0 ];
   var myrow = rows[ Math.max(0, 1 * (getURLVar("page") || getURLVar("row")) - 1) ];
   var mypageurl = (getURLVar("page") || getURLVar("row"));
@@ -33,13 +46,13 @@ function runRows(rows){
     }
   }
   else if(typeof keyrow.properties != "undefined"){
-    // GeoJSON properties
+    // GeoJSON or SHP properties
     for(var prop in keyrow.properties){
       document.title = replaceAll( document.title, keyrow.properties[prop], myrow.properties[prop] );
       $(document.body).html( replaceAll( $(document.body).html(), keyrow.properties[prop], myrow.properties[prop] ) ); 
     }
   }
-
+  
   // make page visible
   $(document.body).css({ visibility: "visible" });
 
@@ -180,7 +193,7 @@ function replaceAll(src, oldr, newr){
   if(typeof src == "undefined" || typeof src.indexOf == "undefined"){
     return src;
   }
-  if(newr.indexOf(oldr) > -1){
+  if((newr + "").indexOf((oldr + "")) > -1){
     return src;
   }
   while(src.indexOf(oldr) > -1){

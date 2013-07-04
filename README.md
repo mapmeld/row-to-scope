@@ -14,7 +14,7 @@ over the page for every row in your data.
 
 * The row/index.html page is how the page looks for the first row in your data.
 
-* data/data.csv is a spreadsheet of your data. Use CSV or GeoJSON data.
+* data/data.csv is a spreadsheet of your data. Use CSV, GeoJSON, or shapefiles.
 
 * The index.html page is a homepage for your app. Use it for important information and links.
 
@@ -32,7 +32,7 @@ over the page for every row in your data.
 
 * jQuery functions $.html and $.text will automatically replace values from the first row.
 
-* For GeoJSON and future geo formats, put getGeometry() in place of GeoJSON. For example, with Leaflet:
+* For GeoJSON and other geo formats, put getGeometry() in place of a GeoJSON feature (including geometry and properties). For example, with Leaflet:
 
       L.geoJson( getGeometry() ).addTo(map);
     
@@ -62,6 +62,7 @@ or, to be more detailed and include replaceRow
 
 * CSV
 * GeoJSON
+* Shapefile using <a href="https://github.com/calvinmetcalf/shapefile-js">shapefile-js</a>
 * (future) KML
 
 ## Not as good as Jekyll or Sheetsee

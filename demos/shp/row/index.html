@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SHP Sample</title>
+    <style type="text/css">
+html, body, #map{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+#overlay{
+  position: fixed;
+  right: 10px;
+  bottom: 50px;
+  background-color: #fff;
+  padding: 8px;
+}
+    </style>
+
+    <script type="text/javascript" src="../../../javascript/jquery.min.js"></script>
+
+    <script type="text/javascript" src="../javascript/shp.js"></script>
+
+    <link href="../stylesheets/leaflet.css" rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="../javascript/leaflet.js"></script>
+
+    <script type="text/javascript">var dataSource = "../data/data.shp.zip";</script>
+    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
+
+    <script type="text/javascript">
+    function init(){    
+      var center = [ 42.348986, -71.08765 ];
+      var map = L.map("map").setView( center, 17 );
+      var mainLayer;
+      
+      L.geoJson( getGeometry(), {
+        onEachFeature: function(feature, layer){
+          layer.bindPopup( "<h4>" + feature.properties.PART_ADDRE + "</h4>Height: " + replaceRow(20.73208992) );
+          mainLayer = layer;
+        }
+      }).addTo(map);
+      
+      mainLayer.openPopup();
+      
+      var toner = 'http://{s}.tiles.mapbox.com/v3/mapmeld.map-uyl6ixjz/{z}/{x}/{y}.png';
+      var tonerAttrib = 'Map data &copy; 2013 OpenStreetMap contributors, Tiles by MapBox';
+      terrainLayer = new L.TileLayer(toner, {maxZoom: 18, attribution: tonerAttrib});
+      map.addLayer(terrainLayer);
+    }
+    </script>
+  </head>
+  <body>
+    <div id="map">
+    </div>
+    <div id="overlay">
+      Powered by MIT-licensed <a href="https://github.com/calvinmetcalf/shapefile-js">shapefile-js</a>
+      by Calvin Metcalf.
+    </div>
+  </body>
+</html>
