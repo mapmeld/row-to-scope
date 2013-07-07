@@ -32,7 +32,7 @@ over the page for every row in your data.
 
 * jQuery functions $.html and $.text will automatically replace values from the first row.
 
-* For GeoJSON and all other geo formats, put getGeometry() in place of a GeoJSON feature (including geometry and properties). For example, with Leaflet:
+* For all geo formats, use getGeometry() to return a GeoJSON feature (including geometry and properties). For example, with Leaflet:
 
       L.geoJson( getGeometry() ).addTo(map);
     
@@ -50,11 +50,11 @@ or, to be more detailed and include replaceRow
 
 * The user downloads the whole database every time that they visit a page! Don't use this for many thousands of rows.
 
-* For maps, 3D pointclouds, and other large datasets, put those files in the /data folder. Then list a file name ("row1.geojson", "row2.geojson", etc.) in each row, and program your page to load the right file.
-
-* Fill the first row with column names like {{NAME}}, {{DESCRIPTION}}, {{HEIGHT}} so that it's easier to write your template page. /row?page=1 will be template, but the rest will have your data.
+* Fill the first row or feature with column names like {{NAME}}, {{DESCRIPTION}}, {{HEIGHT}} so that it's easier to write your template page. /row?page=1 will be template, but the rest will have your data.
 
 * Put &lt;script&gt; and &lt;style&gt; tags in the &lt;head&gt; of the page.
+
+* For complex maps, 3D pointclouds, and other large datasets, place those files in the /data folder. List a file name ("row1.geojson", "row2.geojson", etc.) in your data.csv, so your page loads only one of these large datasets and not the complete set for each row. Use <a href="https://github.com/mapmeld/row-to-scope/tree/gh-pages/demos/webgl/data">the WebGL example</a> as a guide.
 
 * (Future) If you have a meaningful ID for each row, use an {{ID}} column in a CSV, or ID property to a GeoJSON. Then link to pages using /row?id=SPECIAL_ID
 
@@ -65,7 +65,7 @@ or, to be more detailed and include replaceRow
 * Google Earth KML
 * Shapefile using <a href="https://github.com/calvinmetcalf/shapefile-js">shapefile-js</a>
 
-## Not as good as Jekyll or Sheetsee
+## Consider Jekyll or Sheetsee
 
 If you want to
 <a href="http://jekyllrb.com/">build blogs and no-CMS websites</a> or

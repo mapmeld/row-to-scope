@@ -50,7 +50,22 @@
           for the first row into a complete website.</p>
         </div>
         <div class="span3">
-          <img src="http://farm1.staticflickr.com/104/310928267_da5cb8ee68.jpg"/>
+          <img src="http://farm1.staticflickr.com/104/310928267_da5cb8ee68.jpg" class="span2"/>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div class="row photorow underlined">
+        <div class="span7">
+          <h2>Maps, Too</h2>
+          <p>Use <a href="https://github.com/mapmeld/row-to-scope/blob/gh-pages/demos/geojson/data/data.geojson">a GeoJSON file</a>,
+          <a href="https://github.com/mapmeld/row-to-scope/blob/gh-pages/demos/kml/data/data.kml">Google Earth KML</a>,
+          or a shapefile instead of a spreadsheet.
+          <br/>
+          Get <a href="http://mapmeld.github.io/row-to-scope/demos/geojson/row/?page=32">an HTML page</a> for each feature.</p>
+        </div>
+        <div class="span3">
+          <img src="http://farm4.staticflickr.com/3235/2974602244_878dd9d567.jpg"/>
         </div>
       </div>
       <br/>
@@ -69,21 +84,9 @@
       <br/>
       <div class="row photorow underlined">
         <div class="span7">
-          <h2>Maps, Too</h2>
-          <p>Use <a href="https://github.com/mapmeld/row-to-scope/blob/gh-pages/demos/geojson/data/data.geojson">a GeoJSON file</a>,
-          Google Earth KML, or a shapefile instead of a spreadsheet. Get <a href="http://mapmeld.github.io/row-to-scope/demos/geojson/row/?page=32">an HTML page</a>
-          for each feature.</p>
-        </div>
-        <div class="span3">
-          <img src="http://farm4.staticflickr.com/3235/2974602244_878dd9d567.jpg"/>
-        </div>
-      </div>
-      <br/>
-      <br/>
-      <div class="row photorow underlined">
-        <div class="span7">
           <h2>Whatever you want to make</h2>
           <p>Write row/index.html for the first row. Any JavaScript widgets and visualizations work for all of the other rows.</p>
+          <p>Use the init() function to wait until data has been loaded.</p>
           <p>For Example:
             <br/>
             <h4>Data</h4>
@@ -93,11 +96,13 @@ Hello Row-to-Scoped,30.429,30.4<br/>
             </code>
             <br/>
             <h4>Code</h4>
-<code>var center = replaceRow([ 40, -80 ]);<br/>
-      var map = L.map("map").setView( center, 6 );<br/>
+<code>function init(){<br/>
+&nbsp;&nbsp;&nbsp;var center = replaceRow([ 40, -80 ]);<br/>
+&nbsp;&nbsp;&nbsp;var map = L.map("map").setView( center, 6 );<br/>
       <br/>
-      var message = replaceRow("Hello World");<br/>
-      L.marker( center ).bindPopup( message ).addTo(map);<br/>
+&nbsp;&nbsp;&nbsp;var message = replaceRow("Hello World");<br/>
+&nbsp;&nbsp;&nbsp;L.marker( center ).bindPopup( message ).addTo(map);<br/>
+}<br/>
             </code>
             <br/>
             <ul>
