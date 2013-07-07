@@ -20,6 +20,104 @@ else if(dataSource.toLowerCase().indexOf(".shp") > -1){
     runRows(data.features);
   });
 }
+else if(dataSource.toLowerCase().indexOf(".kml") > -1){
+  // KML parser
+  $.ajax({
+    type: "GET",
+    url: dataSource,
+    dataType: "xml",
+    success: function(data){
+      //console.log(data);
+      var myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
+      var placemarks = data.getElementsByTagName("Placemark");
+      var features = [ ];
+      for(var p=0;p<placemarks.length;p++){
+              
+        // assumes <ExtendedData><Data><value>... for any key-value pairs on each feature
+        var props = { };
+        var attributes = placemarks[p].getElementsByTagName("Data");
+        for(var a=0;a<attributes.length;a++){
+          if( attributes[a].getElementsByTagName("value").length ){
+            props[ attributes[a].getAttribute("name") ] = $(attributes[a].getElementsByTagName("value")[0]).text();
+            // check if attribute value could be a number
+            if(!isNaN( 1.0 * props[ attributes[a].getAttribute("name") ] )){
+              props[ attributes[a].getAttribute("name") ] = 1.0 * props[ attributes[a].getAttribute("name") ];
+            }
+          }
+          else{
+            // attribute with no value set in KML
+            props[ attributes[a].getAttribute("name") ] = "";
+          }
+        }
+        // represent KML <name> and <description> as replaceable properties
+        if(placemarks[p].getElementsByTagName("name").length){
+          props[ ">kmlname" ] = $(placemarks[p].getElementsByTagName("name")[0]).text();
+        }
+        if(placemarks[p].getElementsByTagName("description").length){
+          props[ ">description" ] = $(placemarks[p].getElementsByTagName("description")[0]).text();
+        }
+
+        var geoType, geoCoordinates;        
+        var coordtext = $(placemarks[p].getElementsByTagName("coordinates")[0]).text();
+        var firstCoord = coordtext.indexOf("-");
+        if(firstCoord == -1){
+          firstCoord = 10000;
+        }
+        for(var i=0;i<10;i++){
+          var firstOccurrence = coordtext.indexOf("" + i * 1.0);
+          if(firstOccurrence >= 0){
+            firstCoord = Math.min(firstCoord, firstOccurrence);
+          }
+        }
+        coordtext = coordtext.substring(firstCoord).split(' ');
+        
+        if(placemarks[p].getElementsByTagName("LineString").length > 0){
+          geoType = "LineString";
+          geoCoordinates = [ ];
+          for(var c=0;c<coordtext.length;c++){
+            coordtext[c] = coordtext[c].split(',');
+            if(coordtext[c].length < 2){
+              // contains non-coordinate material
+              continue;
+            }
+            geoCoordinates.push( [ 1.0 * coordtext[c][0], 1.0 * coordtext[c][1] ] );
+          }
+        }
+        else if(placemarks[p].getElementsByTagName("Polygon").length > 0){
+          geoType = "Polygon";
+          geoCoordinates = [ ];
+          for(var c=0;c<coordtext.length;c++){
+            coordtext[c] = coordtext[c].split(',');
+            if(coordtext[c].length < 2){
+              // contains non-coordinate material
+              continue;
+            }
+            geoCoordinates.push( [ 1.0 * coordtext[c][0], 1.0 * coordtext[c][1] ] );
+          }
+          geoCoordinates = [ geoCoordinates ];
+        }
+        else if(placemarks[p].getElementsByTagName("Point").length > 0){
+          geoType = "Point";
+          coordtext[0] = coordtext[0].split(',');
+          geoCoordinates = [ 1.0 * coordtext[0][0], 1.0 * coordtext[0][1] ];
+        }
+        
+        features.push({
+          type: "Feature",
+          properties: props,
+          geometry: {
+            type: geoType,
+            coordinates: geoCoordinates
+          }
+        });
+      }
+      getGeometry = function(){
+        return features[ myindex ];
+      };
+      runRows(features);
+    }
+  });
+}
 else{
   // GeoJSON parser
   $.getJSON(dataSource, function(data){
