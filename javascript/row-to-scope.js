@@ -266,7 +266,7 @@ function runRows(rows){
   };
 
   previous = function(){
-    if(mypageurl > 0){
+    if(mypageurl > 1){
       window.location = (window.location+"").replace("page=" + mypageurl, "page=" + (mypageurl * 1 - 1)).replace("row=" + mypageurl, "row=" + (mypageurl * 1 - 1));
     }
   };

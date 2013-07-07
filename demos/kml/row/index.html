@@ -28,7 +28,7 @@ html, body, #map{
       
       L.geoJson( getGeometry(), {
         onEachFeature: function(feature, layer){
-          layer.bindPopup( replaceRow("<h4>Baseball Park</h4><p>Closed Friday, June 8th; Monday, June 11th; Tuesday, June 12th; and Wednesday, June 13th</p>" ) );
+          layer.bindPopup( replaceRow("<h4>Baseball Park</h4><p>Closed Friday, June 8th; Monday, June 11th; Tuesday, June 12th; and Wednesday, June 13th</p>" ) + '<br/><input type="button" value="&larr; Previous" onclick="previous()"/><input type="button" value="Next &rarr;" onclick="next()"/>' );
           mainLayer = layer;
         }
       }).addTo(map);

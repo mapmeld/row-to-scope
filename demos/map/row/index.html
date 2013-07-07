@@ -27,7 +27,7 @@ body{
       var center = replaceRow([ 40, -80 ]);
       var map = L.map("map").setView( center, 6 );
       
-      var message = replaceRow("Hello World");
+      var message = replaceRow("Hello World") + '<br/><input type="button" value="&larr; Previous" onclick="previous()"/><input type="button" value="Next &rarr;" onclick="next()"/>';
       L.marker( center ).addTo(map).bindPopup( message ).openPopup();
       
       var toner = 'http://{s}.tiles.mapbox.com/v3/mapmeld.map-uyl6ixjz/{z}/{x}/{y}.png';
