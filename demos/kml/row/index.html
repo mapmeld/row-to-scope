@@ -16,10 +16,6 @@ html, body, #map{
 
     <link href="../stylesheets/leaflet.css" rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="../javascript/leaflet.js"></script>
-
-    <script type="text/javascript">var dataSource = "../data/data.kml?r=2";</script>
-    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
-
     <script type="text/javascript">
     function init(){    
       var center = [ 32.83657, -83.62914 ];
@@ -41,6 +37,9 @@ html, body, #map{
       map.addLayer(terrainLayer);
     }
     </script>
+
+    <script type="text/javascript">var dataSource = "../data/data.kml?r=2";</script>
+    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
   </head>
   <body>
     <div id="map">
