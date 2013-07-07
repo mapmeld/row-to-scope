@@ -2,6 +2,9 @@
 if(typeof dataSource == "undefined"){
   dataSource = "../data/data.csv";
 }
+if(typeof $ == "undefined"){
+  alert("Include jQuery and add it before row-to-scope.js");
+}
 if(dataSource.toLowerCase().indexOf(".csv") > -1){
   // CSV parser
   $.get(dataSource, function(data){
@@ -11,6 +14,9 @@ if(dataSource.toLowerCase().indexOf(".csv") > -1){
 }
 else if(dataSource.toLowerCase().indexOf(".shp") > -1){
   // ZIP / SHP parser
+  if(typeof shp == "undefined"){
+    alert("Include shapefile-js and add it before row-to-scope.js");
+  }
   shp( dataSource ).then(function(data){
     var myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
     getGeometry = function(){
