@@ -29,7 +29,7 @@ body{
     <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
 
     <script type="text/javascript">
-    var rts = new RowToScope("../data/data.geojson", function(geometry){
+    var rts = rowToScope("../data/data.geojson", function(geometry){
       var center = [ 41.85, -87.65 ];
       var map = L.map("map").setView( center, 10 );
       

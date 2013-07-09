@@ -1,33 +1,32 @@
-var RowToScope = function(dataSource, callback){
+var rowToScope = function(dataSource, callback){
   // jQuery dependency
   if(typeof $ == "undefined"){
     alert("Include jQuery and add it before row-to-scope.js");
   }
-  var rts = this;
 
   // default to use data.csv as a data source
   if(typeof dataSource == "undefined" || !dataSource){
     dataSource = "../data/data.csv";
   }
-  rts.dataSource = dataSource;
+  rowToScope.dataSource = dataSource;
   
   // set callback
   if(typeof callback == "undefined" || !callback){
-    rts.callback = null;
+    rowToScope.callback = null;
   }
   else{
-    rts.callback = callback;
+    rowToScope.callback = callback;
   }
   
   // set index
   var getURLVar = function(nm){nm=nm.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var rxS="[\\?&]"+nm+"=([^&#]*)";var rx=new RegExp(rxS);var rs=rx.exec(window.location.href);if(!rs){return null;}else{return rs[1];}}
-  rts.myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
+  rowToScope.myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
 
   if(dataSource.toLowerCase().indexOf(".csv") > -1){
     // CSV parser
     $.get(dataSource, function(data){
       var rows = $.csv.toArrays(data);
-      rts.runRows(rows);
+      rowToScope.runRows(rows);
     });
   }
   else if(dataSource.toLowerCase().indexOf(".shp") > -1){
@@ -36,11 +35,11 @@ var RowToScope = function(dataSource, callback){
       alert("Include shapefile-js and add it before row-to-scope.js");
     }
     shp( dataSource ).then(function(data){
-      rts.getGeometry = function(){
-        var feature = data.features[ rts.myindex ];
+      rowToScope.getGeometry = function(){
+        var feature = data.features[ rowToScope.myindex ];
         return feature;
       };
-      rts.runRows(data.features);
+      rowToScope.runRows(data.features);
     });
   }
   else if(dataSource.toLowerCase().indexOf(".kml") > -1){
@@ -132,25 +131,26 @@ var RowToScope = function(dataSource, callback){
             }
           });
         }
-        rts.getGeometry = function(){
-          return features[ rts.myindex ];
+        rowToScope.getGeometry = function(){
+          return features[ rowToScope.myindex ];
         };
-        rts.runRows(features);
+        rowToScope.runRows(features);
       }
     });
   }
   else{
     // GeoJSON parser
     $.getJSON(dataSource, function(data){
-      rts.getGeometry = function(){
-        return data.features[ rts.myindex ];
+      rowToScope.getGeometry = function(){
+        return data.features[ rowToScope.myindex ];
       };
-      rts.runRows(data.features);
+      rowToScope.runRows(data.features);
     });
   }
+  return rowToScope;
 }
 
-RowToScope.prototype.runRows = function(rows){
+rowToScope.runRows = function(rows){
   // get key and current page
   
   var keyrow = rows[ 0 ];
@@ -195,12 +195,12 @@ RowToScope.prototype.runRows = function(rows){
   };
   $.fn.oldhtml = $.fn.html.clone();
   $.fn.html = function(){
-    arguments = rts.replaceRow(arguments);
+    arguments = rowToScope.replaceRow(arguments);
     return $.fn.oldhtml.apply(this, arguments);
   };
   $.fn.oldtext = $.fn.text.clone();
   $.fn.text = function(){
-    arguments = rts.replaceRow(arguments);
+    arguments = rowToScope.replaceRow(arguments);
     return $.fn.oldtext.apply(this, arguments);
   };
 
@@ -303,7 +303,7 @@ RowToScope.prototype.runRows = function(rows){
   }
 };
 
-RowToScope.prototype.replaceAll = function(src, oldr, newr){
+rowToScope.replaceAll = function(src, oldr, newr){
   if(typeof src == "undefined" || typeof src.indexOf == "undefined"){
     return src;
   }

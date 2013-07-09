@@ -19,7 +19,7 @@ html, body, #map{
     <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
 
     <script type="text/javascript">
-    var rts = new RowToScope( "../data/data.kml", function(geometry){
+    var rts = rowToScope( "../data/data.kml", function(geometry){
       var center = [ 32.83657, -83.62914 ];
       var map = L.map("map").setView( center, 15 );
       var mainLayer;

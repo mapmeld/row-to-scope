@@ -23,7 +23,7 @@ body{
     <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
 
     <script type="text/javascript">
-    var rts = new RowToScope(null, function(){
+    var rts = rowToScope(null, function(){
       var center = rts.replaceRow([ 40, -80 ]);
       var map = L.map("map").setView( center, 6 );
       

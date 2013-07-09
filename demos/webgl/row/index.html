@@ -26,7 +26,7 @@ html, body{
     <script type="text/javascript" src="../javascript/TrackballControls.js"></script>
     <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
     <script type="text/javascript">
-var rts = new RowToScope("../data/data.csv", function(){
+rowToScope("../data/data.csv", function(){
   var num = 0;
 
   var center = new THREE.Vector3();
@@ -124,7 +124,7 @@ var rts = new RowToScope("../data/data.csv", function(){
 	renderer.render( scene, camera );
   }
 
-  read( "../data/" + rts.replaceRow("shirt") + ".txt" );
+  read( "../data/" + rowToScope.replaceRow("shirt") + ".txt" );
 });
     </script>
   </head>

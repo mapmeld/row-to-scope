@@ -24,37 +24,37 @@ Start with one of these examples inside a &lt;script&gt; tag:
 
 ```javascript
     // Example 1: replace everything on this page using data/data.csv
-    new RowToScope();
+    rowToScope();
     
     // Example 2: custom data source
-    new RowToScope( "../data/data.csv" );
+    rowToScope( "../data/data.csv" );
     
     // Example 3: run JavaScript after the correct row is loaded
-    new RowToScope( "../data/data.csv", function( row ){
+    rowToScope( "../data/data.csv", function( row ){
       // run JavaScript here
       // row is an array of values from this row
     });
     
     // Example 4: run JavaScript after the correct geo feature is loaded
-    new RowToScope( "../data/data.geojson", function( feature ){
+    rowToScope( "../data/data.geojson", function( feature ){
       // run JavaScript here
       // feature is GeoJSON with geometry and properties
       // works for all formats: shapefile, Google Earth KML, and GeoJSON
     });
     
     // Example 5: run JavaScript and replace first row values with the current row
-    var rts = new RowToScope( "../data/data.csv", function( row ){
+    rowToScope( "../data/data.csv", function( row ){
        // direct replacement
-       alert( "My name is " + rts.replaceRow("Nick") + "!" );
+       alert( "My name is " + rowToScope.replaceRow("Nick") + "!" );
        
        // multiple replacement
-       alert( rts.replaceRow( "I live in Boston, and I write JavaScript" ) );
+       alert( rowToScope.replaceRow( "I live in Boston, and I write JavaScript" ) );
     });
 ```
 
 ### More Detailed Info
 
-* In JavaScript, rts.replaceRow( "NAME" ) will convert any values it finds from the first row to a value from the requested row
+* In JavaScript, rowToScope.replaceRow( "NAME" ) will convert any values it finds from the first row to a value from the requested row
 
 * replaceRow also replaces numbers, arrays, and JSON objects from the first row.
 
@@ -63,7 +63,7 @@ Start with one of these examples inside a &lt;script&gt; tag:
 * For all geo formats, the callback returns a GeoJSON feature (including geometry and properties). For example, with Leaflet:
 
 ```javascript
-        new RowToScope("../data/data.geojson", function(feature){
+        rowToScope("../data/data.geojson", function(feature){
           L.geoJson( feature ).addTo(map);
         });
 ```
@@ -71,7 +71,7 @@ Start with one of these examples inside a &lt;script&gt; tag:
 or, to be more detailed and include replaceRow
 
 ```javascript
-    var rts = new RowToScope("../data/data.geojson", function(feature){
+    var rts = rowToScope("../data/data.geojson", function(feature){
       L.geoJson( feature, {
         onEachFeature: function(f, layer){
           layer.bindPopup( rts.replaceRow("60647") );
@@ -80,7 +80,7 @@ or, to be more detailed and include replaceRow
     });
 ```
 
-* Functions rts.previous(), rts.next(), rts.first(), and rts.last() let you page through the rows.
+* Functions rowToScope.previous(), rowToScope.next(), rowToScope.first(), and rowToScope.last() let you page through the rows after data has been loaded.
 
 ### Tips
 

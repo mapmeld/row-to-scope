@@ -86,7 +86,7 @@
         <div class="span7">
           <h2>Whatever you want to make</h2>
           <p>Write row/index.html for the first row. Any JavaScript widgets and visualizations work for all of the other rows.</p>
-          <p>Use the init() function to wait until data has been loaded.</p>
+          <p>Use the callback function to act after data has been loaded.</p>
           <p>For Example:
             <br/>
             <h4>Data</h4>
@@ -96,7 +96,7 @@ Hello Row-to-Scoped,30.429,30.4<br/>
             </code>
             <br/>
             <h4>Code</h4>
-<code>var rts = new RowToScope( "data.csv", function(row){<br/>
+<code>var rts = rowToScope( "data.csv", function(row){<br/>
 &nbsp;&nbsp;&nbsp;var center = rts.replaceRow([ 40, -80 ]);<br/>
 &nbsp;&nbsp;&nbsp;var map = L.map("map").setView( center, 6 );<br/>
       <br/>

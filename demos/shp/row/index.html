@@ -27,7 +27,7 @@ html, body, #map{
     <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
 
     <script type="text/javascript">
-    var rts = new RowToScope( "../data/data.shp.zip", function(geometry){
+    var rts = rowToScope( "../data/data.shp.zip", function(geometry){
       var center = [ 42.348986, -71.08765 ];
       var map = L.map("map").setView( center, 17 );
       var mainLayer;
