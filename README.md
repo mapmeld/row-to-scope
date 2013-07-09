@@ -22,6 +22,7 @@ over the page for every row in your data.
 
 Start with one of these examples inside a &lt;script&gt; tag:
 
+```javascript
     // Example 1: replace everything on this page using data/data.csv
     new RowToScope();
     
@@ -49,6 +50,7 @@ Start with one of these examples inside a &lt;script&gt; tag:
        // multiple replacement
        alert( rts.replaceRow( "I live in Boston, and I write JavaScript" ) );
     });
+```
 
 ### More Detailed Info
 
@@ -60,12 +62,15 @@ Start with one of these examples inside a &lt;script&gt; tag:
 
 * For all geo formats, the callback returns a GeoJSON feature (including geometry and properties). For example, with Leaflet:
 
+```javascript
         new RowToScope("../data/data.geojson", function(feature){
           L.geoJson( feature ).addTo(map);
         });
-    
+```
+
 or, to be more detailed and include replaceRow
 
+```javascript
     var rts = new RowToScope("../data/data.geojson", function(feature){
       L.geoJson( feature, {
         onEachFeature: function(f, layer){
@@ -73,6 +78,7 @@ or, to be more detailed and include replaceRow
         }
       }).addTo(map);
     });
+```
 
 * Functions rts.previous(), rts.next(), rts.first(), and rts.last() let you page through the rows.
 
