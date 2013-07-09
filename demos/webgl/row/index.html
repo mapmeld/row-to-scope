@@ -26,35 +26,35 @@ html, body{
     <script type="text/javascript" src="../javascript/TrackballControls.js"></script>
     <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
     <script type="text/javascript">
-function init(){
-var num = 0;
+var rts = new RowToScope("../data/data.csv", function(){
+  var num = 0;
 
-var center = new THREE.Vector3();
-center.z = - 1000;
-var camera, controls;
-var scene = new THREE.Scene();
+  var center = new THREE.Vector3();
+  center.z = - 1000;
+  var camera, controls;
+  var scene = new THREE.Scene();
 
-camera = new THREE.PerspectiveCamera( 70, ($("#viewer").width() + 100) / $("#viewer").height(), 1, 10000 );
-scene.add(camera);
-camera.position.z = -1000;
-controls = new THREE.TrackballControls( camera, $("#viewer")[0] );
-controls.rotateSpeed = 1.0;
-controls.zoomSpeed = 1.2;
-controls.panSpeed = 0.8;
-controls.noZoom = false;
-controls.noPan = false;
-controls.staticMoving = true;
-controls.dynamicDampingFactor = 0.3;
-var renderer = new THREE.WebGLRenderer( { antialias: true, clearColor: 0x000000 } );
-renderer.setSize( $("#viewer").width(), $("#viewer").height() );
-$("#viewer").append(renderer.domElement);
+  camera = new THREE.PerspectiveCamera( 70, ($("#viewer").width() + 100) / $("#viewer").height(), 1, 10000 );
+  scene.add(camera);
+  camera.position.z = -1000;
+  controls = new THREE.TrackballControls( camera, $("#viewer")[0] );
+  controls.rotateSpeed = 1.0;
+  controls.zoomSpeed = 1.2;
+  controls.panSpeed = 0.8;
+  controls.noZoom = false;
+  controls.noPan = false;
+  controls.staticMoving = true;
+  controls.dynamicDampingFactor = 0.3;
+  var renderer = new THREE.WebGLRenderer( { antialias: true, clearColor: 0x000000 } );
+  renderer.setSize( $("#viewer").width(), $("#viewer").height() );
+  $("#viewer").append(renderer.domElement);
 
-//load txt file and parse it
-var d;
-var colors = [];
-var dStart = 10; // d[0]~d[9] : headers and description infront of actural data sets.
+  //load txt file and parse it
+  var d;
+  var colors = [];
+  var dStart = 10; // d[0]~d[9] : headers and description infront of actural data sets.
 
-function read(fileName){
+  function read(fileName){
 	$.get(fileName, function(data) {
 	                d = $.csv.toArrays(data);
 	                
@@ -66,8 +66,8 @@ function read(fileName){
 		document.addEventListener( 'mousemove', onMouseMove, false );
 	                animate();
 	 });
-}
-function makeColor(){
+  }
+  function makeColor(){
 	for(var i=0; i<d.length-dStart; i++){
 		colors[i] = new THREE.Color();
 		var cc = d[i+dStart][0].split(' ');
@@ -77,8 +77,8 @@ function makeColor(){
 		var r = cc[3]/255, g = cc[4]/255, b = cc[5]/255;
 		colors[i].setRGB(r, g, b);
 	}
-}
-function makeParticle(){
+  }
+  function makeParticle(){
     //make particles
 	var particleCount = d.length-dStart;
 	var particles = new THREE.Geometry();
@@ -109,23 +109,23 @@ function makeParticle(){
 	particles.colors = colors;
 	var particleSystem = new THREE.ParticleSystem(particles, pMaterial);
 	scene.add(particleSystem);
-}
-function onMouseMove(e) {
+  }
+  function onMouseMove(e) {
 	mouse.x = e.clientX;
 	mouse.y = e.clientY;
-}
-function animate() {
+  }
+  function animate() {
 	requestAnimationFrame( animate );
 	render();
-}
-//camera function
-function render() {
+  }
+  //camera function
+  function render() {
 	controls.update();
 	renderer.render( scene, camera );
-}
+  }
 
-  read( "../data/" + replaceRow("shirt") + ".txt" );
-}
+  read( "../data/" + rts.replaceRow("shirt") + ".txt" );
+});
     </script>
   </head>
   <body>

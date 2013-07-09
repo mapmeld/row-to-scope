@@ -25,15 +25,17 @@ body{
 
     <link href="../stylesheets/leaflet.css" rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="../javascript/leaflet.js"></script>
+    <script type="text/javascript" src="../../../javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
 
     <script type="text/javascript">
-    function init(){
+    var rts = new RowToScope("../data/data.geojson", function(geometry){
       var center = [ 41.85, -87.65 ];
       var map = L.map("map").setView( center, 10 );
       
-      L.geoJson( getGeometry(), {
+      L.geoJson( geometry, {
         onEachFeature: function(feature, layer){
-          layer.bindPopup( replaceRow("60647") );
+          layer.bindPopup( rts.replaceRow("60647") );
         }
       }).addTo(map);
       
@@ -41,12 +43,9 @@ body{
       var tonerAttrib = 'Map data &copy; 2013 OpenStreetMap contributors, Tiles by MapBox';
       terrainLayer = new L.TileLayer(toner, {maxZoom: 18, attribution: tonerAttrib});
       map.addLayer(terrainLayer);
-    }
+    });
     </script>
 
-    <script type="text/javascript" src="../../../javascript/jquery.min.js"></script>
-    <script type="text/javascript">var dataSource = "../data/data.geojson";</script>
-    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
   </head>
   <body>
     <div id="map">
@@ -54,8 +53,8 @@ body{
     <div id="overlay">
       ZipCode: 60647
       <br/>
-      <input type="button" value="Previous" onclick="previous()"/>
-      <input type="button" value="Next" onclick="next()"/>
+      <input type="button" value="Previous" onclick="rts.previous()"/>
+      <input type="button" value="Next" onclick="rts.next()"/>
     </div>
   </body>
 </html>

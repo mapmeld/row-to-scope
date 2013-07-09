@@ -21,15 +21,20 @@ html, body, #map{
 
     <link href="../stylesheets/leaflet.css" rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="../javascript/leaflet.js"></script>
+    
+    <script type="text/javascript" src="../../../javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="../javascript/shp.js"></script>
+    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
+
     <script type="text/javascript">
-    function init(){    
+    var rts = new RowToScope( "../data/data.shp.zip", function(geometry){
       var center = [ 42.348986, -71.08765 ];
       var map = L.map("map").setView( center, 17 );
       var mainLayer;
       
-      L.geoJson( getGeometry(), {
+      L.geoJson( geometry, {
         onEachFeature: function(feature, layer){
-          layer.bindPopup( "<h4>" + feature.properties.PART_ADDRE + "</h4>Height: " + replaceRow(20.73208992) );
+          layer.bindPopup( "<h4>" + geometry.properties.PART_ADDRE + "</h4>Height: " + rts.replaceRow(20.73208992) );
           mainLayer = layer;
         }
       }).addTo(map);
@@ -40,13 +45,9 @@ html, body, #map{
       var tonerAttrib = 'Map data &copy; 2013 OpenStreetMap contributors, Tiles by MapBox';
       terrainLayer = new L.TileLayer(toner, {maxZoom: 18, attribution: tonerAttrib});
       map.addLayer(terrainLayer);
-    }
+    });
     </script>
 
-    <script type="text/javascript" src="../../../javascript/jquery.min.js"></script>
-    <script type="text/javascript" src="../javascript/shp.js"></script>
-    <script type="text/javascript">var dataSource = "../data/data.shp.zip";</script>
-    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
   </head>
   <body>
     <div id="map">
@@ -55,8 +56,8 @@ html, body, #map{
       Powered by MIT-licensed <a href="https://github.com/calvinmetcalf/shapefile-js">shapefile-js</a>
       by Calvin Metcalf.
       <br/>
-      <input type="button" value="&larr; Previous" onclick="previous()"/>
-      <input type="button" value="Next &rarr;" onclick="next()"/>
+      <input type="button" value="&larr; Previous" onclick="rts.previous()"/>
+      <input type="button" value="Next &rarr;" onclick="rts.next()"/>
     </div>
   </body>
 </html>

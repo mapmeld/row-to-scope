@@ -96,13 +96,13 @@ Hello Row-to-Scoped,30.429,30.4<br/>
             </code>
             <br/>
             <h4>Code</h4>
-<code>function init(){<br/>
-&nbsp;&nbsp;&nbsp;var center = replaceRow([ 40, -80 ]);<br/>
+<code>var rts = new RowToScope( "data.csv", function(row){<br/>
+&nbsp;&nbsp;&nbsp;var center = rts.replaceRow([ 40, -80 ]);<br/>
 &nbsp;&nbsp;&nbsp;var map = L.map("map").setView( center, 6 );<br/>
       <br/>
-&nbsp;&nbsp;&nbsp;var message = replaceRow("Hello World");<br/>
+&nbsp;&nbsp;&nbsp;var message = rts.replaceRow("Hello World");<br/>
 &nbsp;&nbsp;&nbsp;L.marker( center ).bindPopup( message ).addTo(map);<br/>
-}<br/>
+});<br/>
             </code>
             <br/>
             <ul>

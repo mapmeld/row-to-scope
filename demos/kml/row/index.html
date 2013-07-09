@@ -16,15 +16,17 @@ html, body, #map{
 
     <link href="../stylesheets/leaflet.css" rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="../javascript/leaflet.js"></script>
+    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
+
     <script type="text/javascript">
-    function init(){    
+    var rts = new RowToScope( "../data/data.kml", function(geometry){
       var center = [ 32.83657, -83.62914 ];
       var map = L.map("map").setView( center, 15 );
       var mainLayer;
       
-      L.geoJson( getGeometry(), {
+      L.geoJson( geometry, {
         onEachFeature: function(feature, layer){
-          layer.bindPopup( replaceRow("<h4>Baseball Park</h4><p>Closed Friday, June 8th; Monday, June 11th; Tuesday, June 12th; and Wednesday, June 13th</p>" ) + '<br/><input type="button" value="&larr; Previous" onclick="previous()"/><input type="button" value="Next &rarr;" onclick="next()"/>' );
+          layer.bindPopup( rts.replaceRow("<h4>Baseball Park</h4><p>Closed Friday, June 8th; Monday, June 11th; Tuesday, June 12th; and Wednesday, June 13th</p>" ) + '<br/><input type="button" value="&larr; Previous" onclick="rts.previous()"/><input type="button" value="Next &rarr;" onclick="rts.next()"/>' );
           mainLayer = layer;
         }
       }).addTo(map);
@@ -35,11 +37,9 @@ html, body, #map{
       var tonerAttrib = 'Map data &copy; 2013 OpenStreetMap contributors, Tiles by MapBox';
       terrainLayer = new L.TileLayer(toner, {maxZoom: 18, attribution: tonerAttrib});
       map.addLayer(terrainLayer);
-    }
+    });
     </script>
 
-    <script type="text/javascript">var dataSource = "../data/data.kml?r=2";</script>
-    <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
   </head>
   <body>
     <div id="map">

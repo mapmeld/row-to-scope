@@ -19,13 +19,16 @@ p{
     <script type="text/javascript" src="../javascript/jquery.min.js"></script>
     <script type="text/javascript" src="../javascript/jquery.csv-0.71.min.js"></script>
     <script type="text/javascript" src="../javascript/row-to-scope.js"></script>
+    <script type="text/javascript">
+      var rts = new RowToScope();
+    </script>
   </head>
   <body>
     <p>I love <strong>penguins</strong>.</p>
     <p>Their colors are <u>black and white</u>.</p>
     <p>They are so <em>funny</em>.</p>
     <p>
-      <input type="button" value="Next" onclick="next()"/>
+      <input type="button" value="Next" onclick="rts.next()"/>
     </p>
   </body>
 </html>

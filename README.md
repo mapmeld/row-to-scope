@@ -18,41 +18,69 @@ over the page for every row in your data.
 
 * The index.html page is a homepage for your app. Use it for important information and links.
 
+### Get Started
+
+Start with one of these examples inside a &lt;script&gt; tag:
+
+    // Example 1: replace everything on this page using data/data.csv
+    new RowToScope();
+    
+    // Example 2: custom data source
+    new RowToScope( "../data/data.csv" );
+    
+    // Example 3: run JavaScript after the correct row is loaded
+    new RowToScope( "../data/data.csv", function( row ){
+      // run JavaScript here
+      // row is an array of values from this row
+    });
+    
+    // Example 4: run JavaScript after the correct geo feature is loaded
+    new RowToScope( "../data/data.geojson", function( feature ){
+      // run JavaScript here
+      // feature is GeoJSON with geometry and properties
+      // works for all formats: shapefile, Google Earth KML, and GeoJSON
+    });
+    
+    // Example 5: run JavaScript and replace first row values with the current row
+    var rts = new RowToScope( "../data/data.csv", function( row ){
+       // direct replacement
+       alert( "My name is " + rts.replaceRow("Nick") + "!" );
+       
+       // multiple replacement
+       alert( rts.replaceRow( "I live in Boston, and I write JavaScript" ) );
+    });
+
 ### More Detailed Info
 
-* To change from data/data.csv to data/data.geojson or another file, add a tag just above the &lt;script&gt; tag for row-to-scope.js
-
-    &lt;script type="text/javascript"&gt;var dataSource = "data/geojson.geojson";&lt;/script&gt;
-
-* Put JavaScript code that runs after the correct row is loaded inside an init() function.
-
-* In JavaScript, replaceRow( "NAME" ) will convert a value in the first row to a value from the requested row
+* In JavaScript, rts.replaceRow( "NAME" ) will convert any values it finds from the first row to a value from the requested row
 
 * replaceRow also replaces numbers, arrays, and JSON objects from the first row.
 
 * jQuery functions $.html and $.text will automatically replace values from the first row.
 
-* For all geo formats, use getGeometry() to return a GeoJSON feature (including geometry and properties). For example, with Leaflet:
+* For all geo formats, the callback returns a GeoJSON feature (including geometry and properties). For example, with Leaflet:
 
-      L.geoJson( getGeometry() ).addTo(map);
+        new RowToScope("../data/data.geojson", function(geometry){
+          L.geoJson( geometry ).addTo(map);
+        });
     
 or, to be more detailed and include replaceRow
 
-      L.geoJson( getGeometry(), {
+      L.geoJson( geometry, {
         onEachFeature: function(feature, layer){
-          layer.bindPopup( replaceRow("60647") );
+          layer.bindPopup( rts.replaceRow("60647") );
         }
       }).addTo(map);
 
-* The previous(), next(), first(), and last() functions let you page through the rows.
+* Functions rts.previous(), rts.next(), rts.first(), and rts.last() let you page through the rows.
 
 ### Tips
 
-* The user downloads the whole database every time that they visit a page! Don't use this for many thousands of rows.
+* The user downloads the whole dataset every time that they visit a page! Don't use this for many thousands of rows.
 
 * Fill the first row or feature with column names like {{NAME}}, {{DESCRIPTION}}, {{HEIGHT}} so that it's easier to write your template page. /row?page=1 will be template, but the rest will have your data.
 
-* Put &lt;script&gt; and &lt;style&gt; tags in the &lt;head&gt; of the page.
+* Put &lt;script&gt; and &lt;style&gt; tags in the &lt;head&gt; of the page, so they don't get loaded twice.
 
 * For complex maps, 3D pointclouds, and other large datasets, place those files in the /data folder. List a file name ("row1.geojson", "row2.geojson", etc.) in your data.csv, so your page loads only one of these large datasets and not the complete set for each row. Use <a href="https://github.com/mapmeld/row-to-scope/tree/gh-pages/demos/webgl/data">the WebGL example</a> as a guide.
 
