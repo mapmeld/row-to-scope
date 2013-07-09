@@ -195,20 +195,12 @@ RowToScope.prototype.runRows = function(rows){
   };
   $.fn.oldhtml = $.fn.html.clone();
   $.fn.html = function(){
-    for(var a=0;a<arguments.length;a++){
-      for(var i=0;i<keyrow.length;i++){
-        arguments[a] = this.replaceAll( arguments[a], keyrow[i], myrow[i] ); 
-      }
-    }
+    arguments = rts.replaceRow(arguments);
     return $.fn.oldhtml.apply(this, arguments);
   };
   $.fn.oldtext = $.fn.text.clone();
   $.fn.text = function(){
-    for(var a=0;a<arguments.length;a++){
-      for(var i=0;i<keyrow.length;i++){
-        arguments[a] = this.replaceAll( arguments[a], keyrow[i], myrow[i] ); 
-      }
-    }
+    arguments = rts.replaceRow(arguments);
     return $.fn.oldtext.apply(this, arguments);
   };
 

@@ -60,17 +60,19 @@ Start with one of these examples inside a &lt;script&gt; tag:
 
 * For all geo formats, the callback returns a GeoJSON feature (including geometry and properties). For example, with Leaflet:
 
-        new RowToScope("../data/data.geojson", function(geometry){
-          L.geoJson( geometry ).addTo(map);
+        new RowToScope("../data/data.geojson", function(feature){
+          L.geoJson( feature ).addTo(map);
         });
     
 or, to be more detailed and include replaceRow
 
-      L.geoJson( geometry, {
-        onEachFeature: function(feature, layer){
+    var rts = new RowToScope("../data/data.geojson", function(feature){
+      L.geoJson( feature, {
+        onEachFeature: function(f, layer){
           layer.bindPopup( rts.replaceRow("60647") );
         }
       }).addTo(map);
+    });
 
 * Functions rts.previous(), rts.next(), rts.first(), and rts.last() let you page through the rows.
 
