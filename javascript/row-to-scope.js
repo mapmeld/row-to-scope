@@ -319,13 +319,13 @@ rowToScope.runRows = function(rows){
   
   this.next = function(){
     if(mypageurl < rows.length){
-      window.location = (window.location+"").replace("page=" + mypageurl, "page=" + (mypageurl * 1 + 1)).replace("row=" + mypageurl, "row=" + (mypageurl * 1 + 1));
+      window.location = (window.location+"").replace("page=" + mypageurl, "page=" + (mypageurl * 1 + 1)).replace("row=" + mypageurl, "row=" + (mypageurl * 1 + 1)).replace("id=", "page=" + (mypageurl * 1 + 1) + "&");
     }
   };
 
   this.previous = function(){
     if(mypageurl > 1){
-      window.location = (window.location+"").replace("page=" + mypageurl, "page=" + (mypageurl * 1 - 1)).replace("row=" + mypageurl, "row=" + (mypageurl * 1 - 1));
+      window.location = (window.location+"").replace("page=" + mypageurl, "page=" + (mypageurl * 1 - 1)).replace("row=" + mypageurl, "row=" + (mypageurl * 1 - 1)).replace("id=", "page=" + (mypageurl * 1 - 1) + "&");
     }
   };
   
