@@ -20,10 +20,18 @@ var rowToScope = function(dataSource, callback){
   
   // set index
   var getURLVar = function(nm){nm=nm.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var rxS="[\\?&]"+nm+"=([^&#]*)";var rx=new RegExp(rxS);var rs=rx.exec(window.location.href);if(!rs){return null;}else{return rs[1];}}
-  rowToScope.myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
+  if(getURLVar("page") || getURLVar("row")){
+    rowToScope.myindex = 1 * (getURLVar("page") || getURLVar("row")) - 1;
+  }
+  else if(getURLVar("id")){
+    rowToScope.myindex = "id:" + getURLVar("id");
+  }
 
   if(dataSource.toLowerCase().indexOf(".csv") > -1){
     // CSV parser
+    if(typeof $.csv == "undefined"){
+      alert("Include jquery.csv-0.71.min.js and add it before row-to-scope.js");
+    }
     $.get(dataSource, function(data){
       var rows = $.csv.toArrays(data);
       rowToScope.runRows(rows);
@@ -154,6 +162,43 @@ rowToScope.runRows = function(rows){
   // get key and current page
   
   var keyrow = rows[ 0 ];
+  
+  if(typeof this.myindex == "string" && this.myindex.indexOf("id:") == 0){
+    // set this.myindex using id
+    this.myindex = this.myindex.substring(3);
+    if(typeof keyrow.length != "undefined"){
+      // CSV type
+      for(var c=0;c<keyrow.length;c++){
+        var slug = this.replaceAll( keyrow[c].toLowerCase(), " ", "");
+        if(slug == "id" || slug == "{id}" || slug == "objectid" || slug == "{objectid}"){
+          var keycolumn = c;
+          for(var r=0;r<rows.length;r++){
+            if(rows[r][keycolumn] == this.myindex){
+              this.myindex = r;
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+    else{
+      for(var prop in keyrow.properties){
+        var slug = this.replaceAll( prop.toLowerCase(), " ", "");
+        if(slug == "id" || slug == "objectid"){
+          var keyprop = prop;
+          for(var r=0;r<rows.length;r++){
+            if(rows[r].properties[keyprop] == this.myindex){
+              this.myindex = r;
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
+  
   var myrow = rows[ this.myindex ];
   var mypageurl = this.myindex + 1;
   

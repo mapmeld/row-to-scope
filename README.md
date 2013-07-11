@@ -90,9 +90,9 @@ or, to be more detailed and include replaceRow
 
 * Put &lt;script&gt; and &lt;style&gt; tags in the &lt;head&gt; of the page, so they don't get loaded twice.
 
-* For complex maps, 3D pointclouds, and other large datasets, place those files in the /data folder. List a file name ("row1.geojson", "row2.geojson", etc.) in your data.csv, so your page loads only one of these large datasets and not the complete set for each row. Use <a href="https://github.com/mapmeld/row-to-scope/tree/gh-pages/demos/webgl/data">the WebGL example</a> as a guide.
+* If you have a meaningful ID for each row or feature: put ID or {ID} in the first row of a CSV, an ID property in GeoJSON, or an ID / OBJECTID attribute for a Shapefile or KML. Then link to pages using <a href="http://mapmeld.github.io/row-to-scope/demos/shp/row/?id=11828">/row?id=SPECIAL_ID</a>
 
-* (Future) If you have a meaningful ID for each row, use an {{ID}} column in a CSV, or ID property to a GeoJSON. Then link to pages using /row?id=SPECIAL_ID
+* For complex maps, 3D pointclouds, and other large datasets, place those files in the /data folder. List a file name ("row1.geojson", "row2.geojson", etc.) in your data.csv, so your page loads only one of these large datasets and not the complete set for each row. Use <a href="https://github.com/mapmeld/row-to-scope/tree/gh-pages/demos/webgl/data">the WebGL example</a> as a guide.
 
 ## Supported Formats
 
