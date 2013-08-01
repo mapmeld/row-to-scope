@@ -10,32 +10,31 @@ html, body, #map{
   height: 100%;
   font-family: Arial, sans-serif;
 }
-body{
-  visibility: hidden;
-}
 #overlay{
   position: fixed;
   right: 50px;
   top: 50px;
   background-color: #fff;
-  padding: 8px;
-  font-size: 20pt;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 2px #000000;
 }
     </style>
 
     <link href="../stylesheets/leaflet.css" rel="stylesheet" type="text/css" media="all"/>
-    <script type="text/javascript" src="../javascript/leaflet.js"></script>
-    <script type="text/javascript" src="../../../javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="../scripts/leaflet.js"></script>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="../../../javascript/row-to-scope.js"></script>
 
     <script type="text/javascript">
     var rts = rowToScope("../data/data.geojson", function(geometry){
-      var center = [ 41.85, -87.65 ];
-      var map = L.map("map").setView( center, 10 );
+      var center = [ 42.322768, -71.100946 ];
+      var map = L.map("map").setView( center, 12 );
       
       L.geoJson( geometry, {
         onEachFeature: function(feature, layer){
-          layer.bindPopup( rts.replaceRow("60647") );
+          //layer.bindPopup( );
         }
       }).addTo(map);
       
@@ -51,10 +50,14 @@ body{
     <div id="map">
     </div>
     <div id="overlay">
-      ZipCode: 60647
-      <br/>
-      <input type="button" value="Previous" onclick="rts.previous()"/>
-      <input type="button" value="Next" onclick="rts.next()"/>
+      <h3>270 Centre Street - Boston</h3>
+      <ul>
+        <li>in Jamaica Plain</li>
+        <li>generates 29.28 kiloWatts</li>
+        <li>Solar - Photovoltaic</li>
+        <li>Active</li>
+      </ul>
+      <input type="button" value="Next &rarr;" onclick="rowToScope.next();"/>
     </div>
   </body>
 </html>
